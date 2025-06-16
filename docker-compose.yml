@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  # PHP + Apache сервис
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+      - "8000:8000"
+    volumes:
+     - ./laravel:/var/www/html
+    depends_on:
+      - db
+    environment:
+      DB_CONNECTION: pgsql
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: laravel
+      DB_USERNAME: admin
+      DB_PASSWORD: secret
+      APP_URL: http://localhost:8080 
+
+  # PostgreSQL сервис
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: laravel
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  # pgAdmin сервис
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: secret
+    ports:
+      - "8888:80"
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:

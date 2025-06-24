@@ -26,6 +26,7 @@ class Implement extends Model
 	public $incrementing = false;
 	public $timestamps = false;
 
+	protected $fillable = ['id_services', 'id_device'];
 	protected $casts = [
 		'id_services' => 'int',
 		'id_device' => 'int'

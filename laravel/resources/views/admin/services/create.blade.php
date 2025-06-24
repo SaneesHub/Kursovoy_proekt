@@ -18,7 +18,7 @@
             @csrf
             <div>
                 <label class="block font-bold">Описание:</label>
-                <input type="text" name="Description_services" class="w-full border px-4 py-2 rounded" required>
+                <input type="text" name="description_services" class="w-full border px-4 py-2 rounded" required>
             </div>
 
             <div>
@@ -28,11 +28,10 @@
 
             <div>
                 <label class="block font-bold">Цена (₽):</label>
-                <input type="number" step="0.01" name="Tariff_price" class="w-full border px-4 py-2 rounded" required>
+                <input type="number" step="0.01" name="tariff_price" class="w-full border px-4 py-2 rounded" required>
             </div>
-
             <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded">Создать</button>
-            <a href="{{ route('admin.services.index') }}" class="ml-4 text-gray-600">Назад</a>
+            <a href="{{ route('admin.home') }}" class="ml-4 text-gray-600">Назад</a>
         </form>
     </div>
 @endsection

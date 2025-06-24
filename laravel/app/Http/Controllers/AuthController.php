@@ -42,6 +42,8 @@ class AuthController extends Controller
             'email' => $request->email,
             'hash_password' => Hash::make($request->password),
         ]);
+        \Log::info('Попытка регистрации', $request->all());
+        dd($user); // ← покажет, создался ли пользователь
 
         Auth::login($user);
         return redirect('/');

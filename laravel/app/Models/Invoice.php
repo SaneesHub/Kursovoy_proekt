@@ -51,7 +51,10 @@ class Invoice extends Model
 		'date_formation',
 		'status_payment'
 	];
-
+	public function service()
+	{
+		return $this->belongsTo(Service::class, 'id_services');
+	}
 	public function service_activation()
 	{
 		return $this->belongsTo(ServiceActivation::class, 'id_services')

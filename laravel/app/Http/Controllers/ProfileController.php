@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use App\Models\ServiceActivation;
 use App\Models\Service;
-
+use App\Models\Invoice;
+use App\Models\User;
 class ProfileController extends Controller
 {
     /**
@@ -58,14 +59,19 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
-    public function dashboard()
+    public function index()
     {
+        $user = Auth::user();
         $userId = Auth::user()->id_user;
         $services = ServiceActivation::where('id_user', $userId)
             ->with('service') // ensure relation is defined
             ->get();
+        $users = [];
+        if ($user->id_role == 1) {
+            $users = User::where('id_role', '!=', 1)->get(); // кроме других админов
+        }
 
-        return view('dashboard', compact('services'));
+        return view('dashboard', compact('services', 'users'));
     }
     public function services()
     {
@@ -74,5 +80,13 @@ class ProfileController extends Controller
             ->get();
 
         return view('profile.services', compact('services'));
+    }
+    public function invoices()
+    {
+        $invoices = Invoice::with('service')
+            ->where('id_user', Auth::user()->id_user)
+            ->get();
+
+        return view('profile.invoices', compact('invoices'));
     }
 }

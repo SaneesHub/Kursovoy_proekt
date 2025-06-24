@@ -26,7 +26,7 @@
                     <label for="address_connection" class="form-label">Адрес подключения</label>
                     <input type="text" class="form-control" id="address_connection" name="address_connection" required>
                 </div>
-                <button class="btn">Подтвердить подключение</button>
+                <button class="btn">Подключить</button>
             </form>
         @else
             <p>Для подключения услуги необходимо <a href="{{ route('login') }}">войти</a> в систему.</p>

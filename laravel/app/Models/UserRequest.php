@@ -57,6 +57,7 @@ class UserRequest extends Model
 
 	public function messages()
 	{
-		return $this->hasMany(Message::class, 'use_id_role');
+		return $this->hasMany(Message::class, 'id_request', 'id_request');
 	}
+
 }

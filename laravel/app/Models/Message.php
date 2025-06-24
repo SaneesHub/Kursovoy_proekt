@@ -53,24 +53,11 @@ class Message extends Model
 
 	public function user()
 	{
-		return $this->belongsTo(User::class, 'id_role', 'id_user')
-					->where('User.id_user', '=', 'message.id_role')
-					->where('User.id_role', '=', 'message.id_role')
-					->where('User.id_user', '=', 'message.id_user')
-					->where('User.id_role', '=', 'message.id_user');
+		return $this->belongsTo(User::class, 'id_user', 'id_user');
 	}
 
 	public function user_request()
 	{
-		return $this->belongsTo(UserRequest::class, 'use_id_role')
-					->where('user_request.id_role', '=', 'message.use_id_role')
-					->where('user_request.id_user', '=', 'message.use_id_role')
-					->where('user_request.id_request', '=', 'message.use_id_role')
-					->where('user_request.id_role', '=', 'message.use_id_user')
-					->where('user_request.id_user', '=', 'message.use_id_user')
-					->where('user_request.id_request', '=', 'message.use_id_user')
-					->where('user_request.id_request', '=', 'message.id_request')
-					->where('user_request.id_user', '=', 'message.id_request')
-					->where('user_request.id_role', '=', 'message.id_request');
+		return $this->belongsTo(UserRequest::class, 'id_request', 'id_request');
 	}
 }

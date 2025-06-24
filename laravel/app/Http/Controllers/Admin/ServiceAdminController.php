@@ -7,24 +7,17 @@ use Illuminate\Http\Request;
 
 class ServiceAdminController extends Controller
 {
-    public function index() {
-        $services = Service::all();
-        return view('admin.services.index', compact('services'));
+    public function index()
+    {
+        return view('welcome', [
+            'internetServices' => Service::where('type_services', 'Домашний интернет')->get(),
+            'tvServices' => Service::where('type_services', 'Спутниковое ТВ')->get(),
+            'mobileServices' => Service::where('type_services', 'Мобильные услуги')->get()
+        ]);
     }
 
     public function create() {
         return view('admin.services.create');
-    }
-
-    public function store(Request $request) {
-        $request->validate([
-            'Description_services' => 'required|string|max:255',
-            'Tariff_price' => 'required|numeric',
-            'type_services' => 'required|string'
-        ]);
-
-        Service::create($request->all());
-        return redirect()->route('admin.services.index')->with('success', 'Услуга добавлена.');
     }
 
     public function edit($id) {
@@ -32,22 +25,35 @@ class ServiceAdminController extends Controller
         return view('admin.services.edit', compact('service'));
     }
 
+    public function store(Request $request)
+    {
+        $request->validate([
+            'description_services' => 'required|string|max:255',
+            'type_services' => 'required|string',
+            'tariff_price' => 'required|numeric'
+        ]);
+
+        Service::create($request->all());
+
+        return redirect()->route('home')->with('success', 'Услуга успешно добавлена!');
+    }
+
     public function update(Request $request, $id) {
         $service = Service::findOrFail($id);
 
         $request->validate([
-            'Description_services' => 'required|string|max:255',
-            'Tariff_price' => 'required|numeric',
+            'description_services' => 'required|string|max:255',
+            'tariff_price' => 'required|numeric',
             'type_services' => 'required|string'
         ]);
 
         $service->update($request->all());
-        return redirect()->route('admin.services.index')->with('success', 'Услуга обновлена.');
+        return redirect()->route('home')->with('success', 'Услуга обновлена.');
     }
 
     public function destroy($id) {
         Service::destroy($id);
-        return redirect()->route('admin.services.index')->with('success', 'Услуга удалена.');
+        return redirect()->route('home')->with('success', 'Услуга удалена.');
     }
 }
 
